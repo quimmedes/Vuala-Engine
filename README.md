@@ -21,31 +21,31 @@ but feel free to do as you please and you can always use the SDL-cs bindings and
 ```C#
 Public class Player : GameObject{
 
-          public override void Start()
-      {
+public override void Start()
+{
 
-          texture = App.LoadTextureFromMemory(render, Properties.Resources.player);
-          transform.position.x = 100;
-          transform.position.y = 100;
-      }
+    texture = App.LoadTextureFromMemory(render, Properties.Resources.player);
+    transform.position.x = 100;
+    transform.position.y = 100;
+}
 
-       public override void Update() { }
+public override void Update() { }
 
 }
 
-    public class Enemy : GameObject { }
-
-     public class Bullet : GameObject {
    
-     public override void Update()
-     {
-         if (texture == 0)
-            return;
+public class Enemy : GameObject { }
+
+public class Bullet : GameObject {
+   
+public override void Update()
+{
+    if (texture == 0)
+        return;
          
+    transform.position.x += 8;
 
-             transform.position.x += 8;
-
-            //Destroy Bullet if out of bounds of screen
+    //Destroy Bullet if out of bounds of screen
              if (transform.position.x > App.Window_Width)
              {
                  Destroy();
@@ -64,10 +64,11 @@ Public class Player : GameObject{
                  OnCollision(obj);
              }
          
-     }
+}
 
-     public override bool OnCollision(GameObject obj)
-     {
+
+public override bool OnCollision(GameObject obj){
+
          if (base.OnCollision(obj))
          {
             //if obj can convert to Enemy so it means is is an enemy so you can destroy it, 
@@ -78,7 +79,6 @@ Public class Player : GameObject{
                  obj.Destroy();
                   return true;
              }
-
             
          }
 
