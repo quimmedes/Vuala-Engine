@@ -110,9 +110,10 @@ namespace EngineCSharp
                 {
                     Console.WriteLine("Colidiu");
                     obj.Destroy();
+                    return true;
+
                 }
 
-                return true;
             }
 
             return false;
