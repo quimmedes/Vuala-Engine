@@ -33,8 +33,7 @@ namespace EngineCSharp
         public override void Start()
         {
 
-
-            texture = LoadTextureFromMemory(render, Properties.Resources.player);
+            texture = App.LoadTextureFromMemory(render, Properties.Resources.player);
             transform.position.x = 100;
             transform.position.y = 100;
 
@@ -52,8 +51,8 @@ namespace EngineCSharp
 
             Bullet bullet = new Bullet();
 
-           // byte[] imageData = ResourceHelper.GetEmbeddedResource("EngineCSharp.player.png");
-            bullet.texture = LoadTextureFromMemory(render, Properties.Resources.bullet);
+            // byte[] imageData = ResourceHelper.GetEmbeddedResource("EngineCSharp.player.png");
+            bullet.texture = App.LoadTextureFromMemory(render, Properties.Resources.bullet);
             bullet.transform.position.x = Player.player.transform.position.x;
             bullet.transform.position.y = Player.player.transform.position.y;
             Instantiate(bullet);
@@ -95,6 +94,7 @@ namespace EngineCSharp
 
             transform.position.x += dx;
             transform.position.y += dy;
+
         }
 
         /// <summary>

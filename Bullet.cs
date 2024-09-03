@@ -34,9 +34,9 @@ namespace EngineCSharp
                     Destroy();
                 }
 
-                for (int i = 0; i < gameObjects.Count; i++)
+               foreach(var obj in App.gameObjects)
                 {
-                    OnCollision(gameObjects[i]);
+                    OnCollision(obj);
                 }
             }
         }
