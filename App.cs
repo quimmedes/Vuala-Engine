@@ -6,13 +6,13 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Transactions;
 using static SDL2.SDL;
 using static SDL2.SDL_image;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace EngineCSharp
 {
@@ -77,6 +77,24 @@ namespace EngineCSharp
                 }
             }
 
+        }
+
+        public static nint LoadTextureFromMemory(nint renderer, byte[] imageData)
+        {
+            GCHandle handle = GCHandle.Alloc(imageData, GCHandleType.Pinned);
+            IntPtr imagePtr = handle.AddrOfPinnedObject();
+            // Create SDL_RWops from byte array
+            IntPtr rwops = SDL.SDL_RWFromMem(imagePtr, imageData.Length);
+            if (rwops == IntPtr.Zero)
+                throw new Exception("Failed to create RWops: " + SDL.SDL_GetError());
+
+            // Load texture from RWops
+            IntPtr texture = IMG_LoadTexture_RW(renderer, rwops, 1);
+            if (texture == IntPtr.Zero)
+                throw new Exception("Failed to load texture from memory: " + IMG_GetError());
+
+           handle.Free();
+            return texture;
         }
 
 
@@ -158,7 +176,7 @@ namespace EngineCSharp
 
         static void prepareScene()
         {
-            SDL_SetRenderDrawColor(render, 96, 96, 255, 255);
+            SDL_SetRenderDrawColor(render, 0, 255, 128, 0);
             SDL_RenderClear(render);
         }
 
