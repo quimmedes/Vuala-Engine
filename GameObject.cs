@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace EngineCSharp
@@ -17,6 +18,8 @@ namespace EngineCSharp
         public GameObject()
         {
             transform = new Transform();
+            _mainThreadContext = SynchronizationContext.Current ?? new SynchronizationContext();
+
         }
 
         public Action component;
@@ -34,12 +37,15 @@ namespace EngineCSharp
             }
         }
 
+        SynchronizationContext _mainThreadContext = SynchronizationContext.Current;
+
+
         /// <summary>
         /// Called when the game object is created.
         /// </summary>
         public virtual void Start()
         {
-
+            _mainThreadContext = SynchronizationContext.Current;
         }
 
         /// <summary>
@@ -67,6 +73,15 @@ namespace EngineCSharp
             {
                 App.blit(texture, transform.position.x, transform.position.y);
             }
+        }
+
+        public void MainThread(Action action)
+        {
+           
+            _mainThreadContext.Post(_ =>
+            {
+                action?.Invoke();
+            }, null);
         }
 
         /// <summary>

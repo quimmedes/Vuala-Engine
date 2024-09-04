@@ -41,6 +41,7 @@ namespace EngineCSharp
         
         }
 
+
         /// <summary>
         /// Creates a bullet object and shoots it.
         /// </summary>
@@ -57,6 +58,7 @@ namespace EngineCSharp
             bullet.transform.position.y = Player.player.transform.position.y;
             Instantiate(bullet);
             bulletCount = 8;
+            Audio.PlaySound(Audio.SND.SND_PLAYER_FIRE, (int)Audio.CH.CH_PLAYER);
         }
 
         /// <summary>
@@ -90,10 +92,15 @@ namespace EngineCSharp
             if (Input.keyboard[(int)SDL_Scancode.SDL_SCANCODE_SPACE] == 1)
             {
                 makeBullet();
+               
             }
 
             transform.position.x += dx;
             transform.position.y += dy;
+
+
+            //Clipping the player to the screen
+            App.clipToScreen(transform);
 
         }
 

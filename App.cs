@@ -28,11 +28,14 @@ namespace EngineCSharp
         const int SIDE_PLAYER = 0;
         const int SIDE_ENEMY = 1;
         const int FPS = 60;
-        static ulong lastTime;
+        static ulong lastTime = 0;
         private static float deltaTime;
         public static List<GameObject> gameObjects = new List<GameObject>();
         static ConcurrentStack<GameObject> instantiates = new ConcurrentStack<GameObject> ();
         static ConcurrentStack<GameObject> exclusions = new ConcurrentStack<GameObject>();
+        //MultiThreadRelated
+        public static AutoResetEvent _mainThreadEvent;
+        public static SynchronizationContext _mainThreadContext;
 
 
         public static void Instantiate(GameObject gameObject) {
@@ -106,6 +109,9 @@ namespace EngineCSharp
 
             lastTime = SDL.SDL_GetPerformanceCounter();
 
+            //MultiThread Related
+            _mainThreadEvent = new AutoResetEvent(true);
+
 
             // Get the assembly containing the classes
             Assembly assembly = Assembly.GetExecutingAssembly();
@@ -132,6 +138,10 @@ namespace EngineCSharp
                 game?.BeforeRender();
 
             }
+
+            long then = SDL_GetTicks();
+            float remainder = 0;
+                     
 
             while (true)
             {
@@ -168,10 +178,38 @@ namespace EngineCSharp
                 InstantiateAll();
                 RemoveAll();
 
-                Thread.Sleep(16);
-                
+                _mainThreadEvent.Set();
+
+
+                capFrameRate(ref then, ref remainder);
+
             }
             SDL_Quit();
+        }
+
+        static void capFrameRate(ref long then, ref float remainder)
+        {
+            long wait;
+            long frameTime;
+
+            wait = 16 + (long)remainder;
+
+            remainder -= (int)remainder;
+
+            frameTime = SDL_GetTicks() - then;
+
+            wait -= frameTime;
+
+            if (wait < 1)
+            {
+                wait = 1;
+            }
+
+            SDL_Delay((uint)wait);
+
+            remainder += 0.667f;
+
+            then = SDL_GetTicks();
         }
 
         static void prepareScene()
@@ -226,6 +264,34 @@ namespace EngineCSharp
             if (render < 0)
             {
                 Console.WriteLine("Render could not be created");
+            }
+
+            Audio.AudioInit();
+        }
+
+        public static void clipToScreen(Transform transform)
+        {
+            if (transform != null)
+            {
+                if (transform.position.x < 0)
+                {
+                    transform.position.x = 0;
+                }
+
+                if (transform.position.y < 0)
+                {
+                    transform.position.y = 0;
+                }
+
+                if (transform.position.x > Window_Width - transform.size.w)
+                {
+                    transform.position.x = Window_Width - transform.size.w;
+                }
+
+                if (transform.position.y > Window_Height - transform.size.h)
+                {
+                    transform.position.y = Window_Height - transform.size.h;
+                }
             }
         }
 
