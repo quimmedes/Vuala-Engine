@@ -1,4 +1,4 @@
-# EngineCSharp
+# Vuala C# Game Engine
 
 Vuala Engine is engine inspired by Unity3d sintax Built upon SDL2 and with SDL2-CS bindings, the projet still early so there is no editor and only basic functionality implemented,
 but feel free to do as you please and you can always use the SDL-cs bindings and implement more stuff yourself.
