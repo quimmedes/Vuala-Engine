@@ -1,6 +1,7 @@
 using System;
 using EngineCSharp;
-using SDL2;
+using EngineCSharp.Vuala.SDLCS;
+
 public class Entity : IDisposable
 {
     public int x, y, w, h, dx, dy;

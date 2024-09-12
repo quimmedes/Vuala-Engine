@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static SDL2.SDL_mixer;
+using static EngineCSharp.Vuala.SDLCS.SDL_mixer;
 
-namespace EngineCSharp
+namespace EngineCSharp.Vuala
 {
     public class Audio
     {
-        public static Dictionary<SND, IntPtr> Audios = new Dictionary<SND, IntPtr>();
+        public static Dictionary<SND, nint> Audios = new Dictionary<SND, nint>();
         const int MAX_SND_CHANNELS = 8;
-        private static IntPtr music;
+        private static nint music;
         public enum CH
         {
             CH_ANY = -1,
@@ -60,7 +60,7 @@ namespace EngineCSharp
 
         public static void PlayMusic(int loop)
         {
-            Mix_PlayMusic(music, loop==0?0:-1);
+            Mix_PlayMusic(music, loop == 0 ? 0 : -1);
         }
 
         public static void PlaySound(SND snd, int channel)

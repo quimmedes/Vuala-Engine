@@ -1,16 +1,15 @@
-﻿using SDL2;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using static SDL2.SDL_mixer;
+using static EngineCSharp.Vuala.SDLCS.SDL_mixer;
 
-namespace EngineCSharp
+namespace EngineCSharp.Vuala
 {
 
 
     public class Engine
     {
-       
+
 
     }
 }

@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>disable</ImplicitUsings>
     <Nullable>enable</Nullable>
@@ -16,9 +16,9 @@
 
   
   <ItemGroup>
-	  <EmbeddedResource Include="player.png" />
-	  <EmbeddedResource Include="bullet.png" />
-	  <EmbeddedResource Include="enemy.png" />
+	  <EmbeddedResource Include="MyGame\Assets\sprites\player.png" />
+	  <EmbeddedResource Include="MyGame\Assets\sprites\bullet.png" />
+	  <EmbeddedResource Include="MyGame\Assets\sprites\enemy.png" />
 
   </ItemGroup>
 
@@ -42,6 +42,21 @@
   
   <ItemGroup>
     <None Update="libogg-0.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="MyGame\Assets\music\Mercury.ogg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="MyGame\Assets\sound\10 Guage Shotgun-SoundBible.com-74120584.ogg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="MyGame\Assets\sound\196914__dpoggioli__laser-gun.ogg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="MyGame\Assets\sound\245372__quaker540__hq-explosion.ogg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="MyGame\Assets\sound\334227__jradcoolness__laser.ogg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="SDL2.dll">

@@ -1,5 +1,5 @@
-﻿using Microsoft.VisualBasic.FileIO;
-using SDL2;
+﻿using EngineCSharp.Vuala.SDLCS;
+using Microsoft.VisualBasic.FileIO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace EngineCSharp
+namespace EngineCSharp.Vuala
 {
     /// <summary>
     /// Represents a game object in the game world.
@@ -77,7 +77,7 @@ namespace EngineCSharp
 
         public void MainThread(Action action)
         {
-           
+
             _mainThreadContext.Post(_ =>
             {
                 action?.Invoke();
@@ -107,10 +107,10 @@ namespace EngineCSharp
         {
             if (disposing)
             {
-                if (texture != IntPtr.Zero)
+                if (texture != nint.Zero)
                 {
                     SDL.SDL_DestroyTexture(texture);
-                    texture = IntPtr.Zero;
+                    texture = nint.Zero;
                 }
             }
         }
@@ -128,10 +128,10 @@ namespace EngineCSharp
         {
             Dispose(false);
 
-            if (texture != IntPtr.Zero)
+            if (texture != nint.Zero)
             {
                 SDL.SDL_DestroyTexture(texture);
-                texture = IntPtr.Zero;
+                texture = nint.Zero;
             }
         }
     }
@@ -249,7 +249,7 @@ namespace EngineCSharp
             float theta = (float)Math.Acos(dot) * t;
             Vector2 relative = b - a * dot;
             relative = relative.Normalize();
-            return (a * (float)Math.Cos(theta) + relative * (float)Math.Sin(theta));
+            return a * (float)Math.Cos(theta) + relative * (float)Math.Sin(theta);
         }
     }
 
@@ -342,7 +342,7 @@ namespace EngineCSharp
             float theta = (float)Math.Acos(dot) * t;
             Vector3 relative = b - a * dot;
             relative = relative.Normalize();
-            return (a * (float)Math.Cos(theta) + relative * (float)Math.Sin(theta));
+            return a * (float)Math.Cos(theta) + relative * (float)Math.Sin(theta);
         }
     }
 

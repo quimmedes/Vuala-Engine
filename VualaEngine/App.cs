@@ -1,5 +1,4 @@
-﻿using SDL2;
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -11,18 +10,18 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Transactions;
-using static SDL2.SDL;
-using static SDL2.SDL_image;
+using static EngineCSharp.Vuala.SDLCS.SDL;
+using static EngineCSharp.Vuala.SDLCS.SDL_image;
 
-namespace EngineCSharp
+namespace EngineCSharp.Vuala
 {
-  
 
-    public class App 
+
+    public class App
     {
 
-        public static IntPtr window = IntPtr.Zero;
-        public static IntPtr render = IntPtr.Zero;
+        public static nint window = nint.Zero;
+        public static nint render = nint.Zero;
         public const int Window_Width = 1280;
         public const int Window_Height = 720;
         const int SIDE_PLAYER = 0;
@@ -31,22 +30,23 @@ namespace EngineCSharp
         static ulong lastTime = 0;
         private static float deltaTime;
         public static List<GameObject> gameObjects = new List<GameObject>();
-        static ConcurrentStack<GameObject> instantiates = new ConcurrentStack<GameObject> ();
+        static ConcurrentStack<GameObject> instantiates = new ConcurrentStack<GameObject>();
         static ConcurrentStack<GameObject> exclusions = new ConcurrentStack<GameObject>();
         //MultiThreadRelated
         public static AutoResetEvent _mainThreadEvent;
         public static SynchronizationContext _mainThreadContext;
 
 
-        public static void Instantiate(GameObject gameObject) {
-            Parallel.Invoke( () => instantiates.Push(gameObject));
-            
+        public static void Instantiate(GameObject gameObject)
+        {
+            Parallel.Invoke(() => instantiates.Push(gameObject));
+
         }
 
-       public static float DeltaTime()
+        public static float DeltaTime()
         {
-            ulong currentTime = SDL.SDL_GetPerformanceCounter();
-            ulong frequency = SDL.SDL_GetPerformanceFrequency();
+            ulong currentTime = SDL_GetPerformanceCounter();
+            ulong frequency = SDL_GetPerformanceFrequency();
             float deltaTime = (float)(currentTime - lastTime) / frequency;
             lastTime = currentTime;
             return deltaTime;
@@ -54,7 +54,7 @@ namespace EngineCSharp
 
         static void InstantiateAll()
         {
-         if(instantiates.TryPop(out GameObject result))
+            if (instantiates.TryPop(out GameObject result))
             {
                 if (result != null)
                 {
@@ -85,29 +85,29 @@ namespace EngineCSharp
         public static nint LoadTextureFromMemory(nint renderer, byte[] imageData)
         {
             GCHandle handle = GCHandle.Alloc(imageData, GCHandleType.Pinned);
-            IntPtr imagePtr = handle.AddrOfPinnedObject();
+            nint imagePtr = handle.AddrOfPinnedObject();
             // Create SDL_RWops from byte array
-            IntPtr rwops = SDL.SDL_RWFromMem(imagePtr, imageData.Length);
-            if (rwops == IntPtr.Zero)
-                throw new Exception("Failed to create RWops: " + SDL.SDL_GetError());
+            nint rwops = SDL_RWFromMem(imagePtr, imageData.Length);
+            if (rwops == nint.Zero)
+                throw new Exception("Failed to create RWops: " + SDL_GetError());
 
             // Load texture from RWops
-            IntPtr texture = IMG_LoadTexture_RW(renderer, rwops, 1);
-            if (texture == IntPtr.Zero)
+            nint texture = IMG_LoadTexture_RW(renderer, rwops, 1);
+            if (texture == nint.Zero)
                 throw new Exception("Failed to load texture from memory: " + IMG_GetError());
 
-           handle.Free();
+            handle.Free();
             return texture;
         }
 
 
 
-        private static void Main(string[] args)
+        public static void Main(string[] args)
         {
 
             Init();
 
-            lastTime = SDL.SDL_GetPerformanceCounter();
+            lastTime = SDL_GetPerformanceCounter();
 
             //MultiThread Related
             _mainThreadEvent = new AutoResetEvent(true);
@@ -128,8 +128,8 @@ namespace EngineCSharp
 
                 // Call the DoSomething method on the instance
                 instance?.Start();
-                if(instance!=null)
-                gameObjects.Add(instance);
+                if (instance != null)
+                    gameObjects.Add(instance);
 
             }
 
@@ -141,7 +141,7 @@ namespace EngineCSharp
 
             long then = SDL_GetTicks();
             float remainder = 0;
-                     
+
 
             while (true)
             {
@@ -160,7 +160,7 @@ namespace EngineCSharp
                 }
                 */
 
-                    foreach (var game in gameObjects)
+                foreach (var game in gameObjects)
                 {
                     game?.Render();
 
@@ -169,7 +169,7 @@ namespace EngineCSharp
                 foreach (var game in gameObjects)
                 {
                     game?.Update();
-                
+
                 }
 
 
@@ -223,14 +223,14 @@ namespace EngineCSharp
             SDL_RenderPresent(render);
         }
 
-        public static void blit(IntPtr texutre, float x, float y)
+        public static void blit(nint texutre, float x, float y)
         {
             SDL_Rect dest = new SDL_Rect();
             dest.x = (int)x;
             dest.y = (int)y;
-                      
+
             SDL_QueryTexture(texutre, out uint format, out int access, out dest.w, out dest.h);
-            SDL_RenderCopy(render, texutre, IntPtr.Zero, ref dest);
+            SDL_RenderCopy(render, texutre, nint.Zero, ref dest);
 
         }
 
@@ -245,7 +245,7 @@ namespace EngineCSharp
                 Console.WriteLine("SDL_INICIALIZADO");
             }
 
-            if (IMG_Init(IMG_InitFlags.IMG_INIT_PNG | IMG_InitFlags.IMG_INIT_JPG) < 0)
+            if (IMG_Init(IMG_InitFlags.IMG_INIT_PNG | IMG_InitFlags.IMG_INIT_JPG | IMG_InitFlags.IMG_INIT_WEBP | IMG_InitFlags.IMG_INIT_TIF) < 0)
             {
                 Console.WriteLine("Não incializou a imagem");
             }
@@ -298,7 +298,7 @@ namespace EngineCSharp
         public static bool collision(float x1, float y1, float w1, float h1, float x2, float y2, float w2, float h2)
         {
 
-            SDL.SDL_Rect sprite1 = new SDL.SDL_Rect
+            SDL_Rect sprite1 = new SDL_Rect
             {
                 x = (int)x1,
                 y = (int)y1, // Y position
@@ -306,7 +306,7 @@ namespace EngineCSharp
                 h = (int)h1  // Height of the sprite
             };
 
-            SDL.SDL_Rect sprite2 = new SDL.SDL_Rect
+            SDL_Rect sprite2 = new SDL_Rect
             {
                 x = (int)x2,
                 y = (int)y2, // Y position
@@ -315,12 +315,12 @@ namespace EngineCSharp
             };
 
 
-              bool a = (Math.Max(x1, x2) < Math.Min(x1 + w1, x2 + w2)) && (Math.Max(y1, y2) < Math.Min(y1 + h1, y2 + h2));
-                 return a;
-          //  SDL_bool a = SDL_HasIntersection(ref sprite1, ref sprite2);
+            bool a = Math.Max(x1, x2) < Math.Min(x1 + w1, x2 + w2) && Math.Max(y1, y2) < Math.Min(y1 + h1, y2 + h2);
+            return a;
+            //  SDL_bool a = SDL_HasIntersection(ref sprite1, ref sprite2);
 
-           // Console.WriteLine("colisao eh " + a);
-          //  return a == SDL_bool.SDL_TRUE ? true : false;
+            // Console.WriteLine("colisao eh " + a);
+            //  return a == SDL_bool.SDL_TRUE ? true : false;
         }
     }
 }

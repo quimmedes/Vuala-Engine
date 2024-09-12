@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static SDL2.SDL;
-using static SDL2.SDL_image;
-using static EngineCSharp.App;
+using static EngineCSharp.Vuala.SDLCS.SDL;
+using static EngineCSharp.Vuala.SDLCS.SDL_image;
+using static EngineCSharp.Vuala.App;
 using System.ComponentModel;
 using System.Runtime.Versioning;
-using SDL2;
 using System.Runtime.InteropServices;
+using EngineCSharp.Vuala;
 
-namespace EngineCSharp
+namespace EngineCSharp.MyGame.Scripts
 {
 
     /// <summary>
@@ -29,16 +29,16 @@ namespace EngineCSharp
         /// </summary>
         /// 
 
-        
+
         public override void Start()
         {
 
-            texture = App.LoadTextureFromMemory(render, Properties.Resources.player);
+            texture = LoadTextureFromMemory(render, Properties.Resources.player);
             transform.position.x = 100;
             transform.position.y = 100;
 
             player = this;
-        
+
         }
 
 
@@ -53,9 +53,9 @@ namespace EngineCSharp
             Bullet bullet = new Bullet();
 
             // byte[] imageData = ResourceHelper.GetEmbeddedResource("EngineCSharp.player.png");
-            bullet.texture = App.LoadTextureFromMemory(render, Properties.Resources.bullet);
-            bullet.transform.position.x = Player.player.transform.position.x;
-            bullet.transform.position.y = Player.player.transform.position.y;
+            bullet.texture = LoadTextureFromMemory(render, Properties.Resources.bullet);
+            bullet.transform.position.x = player.transform.position.x;
+            bullet.transform.position.y = player.transform.position.y;
             Instantiate(bullet);
             bulletCount = 8;
             Audio.PlaySound(Audio.SND.SND_PLAYER_FIRE, (int)Audio.CH.CH_PLAYER);
@@ -92,7 +92,7 @@ namespace EngineCSharp
             if (Input.keyboard[(int)SDL_Scancode.SDL_SCANCODE_SPACE] == 1)
             {
                 makeBullet();
-               
+
             }
 
             transform.position.x += dx;
@@ -100,7 +100,7 @@ namespace EngineCSharp
 
 
             //Clipping the player to the screen
-            App.clipToScreen(transform);
+            clipToScreen(transform);
 
         }
 

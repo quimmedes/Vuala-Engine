@@ -4,11 +4,12 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using static SDL2.SDL;
-using static SDL2.SDL_image;
-using static EngineCSharp.App;
+using static EngineCSharp.Vuala.SDLCS.SDL;
+using static EngineCSharp.Vuala.SDLCS.SDL_image;
+using static EngineCSharp.Vuala.App;
+using EngineCSharp.Vuala;
 
-namespace EngineCSharp
+namespace EngineCSharp.MyGame.Scripts
 {
     /// <summary>
     /// Represents an enemy object in the game.

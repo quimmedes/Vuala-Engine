@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static EngineCSharp.App;
+using EngineCSharp.Vuala;
+using static EngineCSharp.Vuala.App;
 
-namespace EngineCSharp
+namespace EngineCSharp.MyGame.Scripts
 {
 
 
@@ -23,18 +24,18 @@ namespace EngineCSharp
             {
                 transform.position.x += 8;
 
-                if (transform.position.x > App.Window_Width)
+                if (transform.position.x > Window_Width)
                 {
                     Destroy();
                     Console.WriteLine("Destroyed Bullet");
                 }
 
-                if (transform.position.y > App.Window_Height)
+                if (transform.position.y > Window_Height)
                 {
                     Destroy();
                 }
 
-               foreach(var obj in App.gameObjects)
+                foreach (var obj in gameObjects)
                 {
                     OnCollision(obj);
                 }

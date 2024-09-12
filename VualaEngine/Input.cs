@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static SDL2.SDL;
+using static EngineCSharp.Vuala.SDLCS.SDL;
 
-namespace EngineCSharp
+namespace EngineCSharp.Vuala
 {
     public class Input : GameObject
     {
