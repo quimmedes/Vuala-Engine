@@ -1,8 +1,10 @@
-﻿using EngineCSharp.Vuala.SDLCS;
+﻿using EngineCSharp.MyGame.Scripts;
+using EngineCSharp.Vuala.SDLCS;
 using Microsoft.VisualBasic.FileIO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -71,7 +73,9 @@ namespace EngineCSharp.Vuala
         {
             if (texture != 0)
             {
-                App.blit(texture, transform.position.x, transform.position.y);
+               var pos = transform.position - Camera.Instance.GetPosition();
+                App.blit(texture, pos.x, pos.y);
+            //  App.blit(texture,transform.position.x,transform.position.y);
             }
         }
 
@@ -144,6 +148,7 @@ namespace EngineCSharp.Vuala
         public Vector3 rotation;
         public Vector3 scale;
         public Size size;
+        private Vector4 worldMatrix;
 
         public Transform()
         {

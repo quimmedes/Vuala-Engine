@@ -38,9 +38,18 @@ namespace EngineCSharp.MyGame.Scripts
             transform.position.y = 100;
 
             player = this;
+            Camera.Instance.SetTarget(player);
 
         }
 
+
+
+        public override void BeforeRender()
+        {
+           
+
+        }
+  
 
         /// <summary>
         /// Creates a bullet object and shoots it.
@@ -100,7 +109,7 @@ namespace EngineCSharp.MyGame.Scripts
 
 
             //Clipping the player to the screen
-            clipToScreen(transform);
+           // clipToScreen(transform);
 
         }
 
