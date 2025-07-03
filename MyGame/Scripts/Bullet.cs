@@ -24,13 +24,13 @@ namespace EngineCSharp.MyGame.Scripts
             {
                 transform.position.x += 8;
 
-                if (transform.position.x > Window_Width)
+                if (transform.position.x > Window_Width + Camera.Instance.GetPosition().x)
                 {
                     Destroy();
                     Console.WriteLine("Destroyed Bullet");
                 }
 
-                if (transform.position.y > Window_Height)
+                if (transform.position.y > Window_Height + Camera.Instance.GetPosition().y)
                 {
                     Destroy();
                 }
@@ -54,7 +54,9 @@ namespace EngineCSharp.MyGame.Scripts
                 if (obj is Enemy)
                 {
                     Console.WriteLine("Collision occurred");
+                    Audio.Play(Audio.SND.SND_ALIEN_DIE);
                     obj.Destroy();
+                   // this.Destroy();
                 }
 
                 return true;

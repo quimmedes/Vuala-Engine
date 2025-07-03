@@ -47,8 +47,8 @@ namespace EngineCSharp.MyGame.Scripts
 
 
             enemy.texture = LoadTextureFromMemory(render, Properties.Resources.enemy);
-            enemy.transform.position.x = Window_Width;
-            enemy.transform.position.y = new Random().Next(Window_Height);
+            enemy.transform.position.x = Window_Width + Camera.Instance.GetPosition().x;
+            enemy.transform.position.y = new Random().Next(Window_Height) + Camera.Instance.GetPosition().y;
             Instantiate(enemy);
 
             count = 0;

@@ -2,8 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using static EngineCSharp.Vuala.App;
+
 
 namespace EngineCSharp.MyGame.Scripts
 {
@@ -29,20 +32,26 @@ namespace EngineCSharp.MyGame.Scripts
         private int viewportHeight;
 
         // Current camera position
-        private Vector3 position = new Vector3(100, 50,-10);
+        private Vector3 position = new Vector3(0, 0,-10);
 
         // Singleton instance
         public static Camera Instance { get; private set; }
 
-        
+
 
         /// <summary>
         /// Initializes the camera component.
         /// </summary>
+        /// 
+ 
         public override void Start()
         {
              
             base.Start();
+
+            texture = LoadTextureFromMemory(render, Properties.Resources.background);
+            transform.position.x = 0;
+            transform.position.y = 0;
 
             // Set up the singleton instance
             Instance = this;
@@ -80,8 +89,16 @@ namespace EngineCSharp.MyGame.Scripts
             {
                 Vector3 desiredPosition = target.transform.position - offset;
                 
-                offset = Vector3.Lerp(offset, desiredPosition, 0.05f);
+                offset = Vector3.Lerp(offset, desiredPosition, 0.125f);
 
+                position = offset;
+                transform.position = position;
+
+                // Apply bounds
+                if (useBounds)
+                {
+                    ApplyBounds();
+                }
 
 
             }

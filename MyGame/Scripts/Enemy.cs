@@ -37,6 +37,7 @@ namespace EngineCSharp.MyGame.Scripts
 
             if (transform.position.x < -transform.size.w)
             {
+               
                 Destroy();
                 Console.WriteLine("Destruiu");
             }

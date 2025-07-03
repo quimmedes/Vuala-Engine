@@ -26,7 +26,7 @@ namespace EngineCSharp.Vuala
         public const int Window_Height = 720;
         const int SIDE_PLAYER = 0;
         const int SIDE_ENEMY = 1;
-        const int FPS = 60;
+        const int FPS = 1200;
         static ulong lastTime = 0;
         private static float deltaTime;
         public static List<GameObject> gameObjects = new List<GameObject>();
@@ -258,6 +258,9 @@ namespace EngineCSharp.Vuala
 
             window = SDL_CreateWindow("Game from C#", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, Window_Width, Window_Height, SDL_WindowFlags.SDL_WINDOW_MAXIMIZED);
             SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");
+            //Prefer directx11
+            SDL_SetHint(SDL_HINT_RENDER_DRIVER, "direct3d11");
+
 
             render = SDL_CreateRenderer(window, -1, SDL_RendererFlags.SDL_RENDERER_ACCELERATED);
 

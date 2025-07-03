@@ -68,5 +68,10 @@ namespace EngineCSharp.Vuala
             Mix_PlayChannel(channel, Audios[snd], 0);
         }
 
+        public static void Play(SND snd)
+        {
+             PlaySound(snd, (int) Audio.CH.CH_PLAYER);
+        }
+
     }
 }

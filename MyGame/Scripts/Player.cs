@@ -36,6 +36,7 @@ namespace EngineCSharp.MyGame.Scripts
             texture = LoadTextureFromMemory(render, Properties.Resources.player);
             transform.position.x = 100;
             transform.position.y = 100;
+            transform.size = new Size(100, 100);
 
             player = this;
             Camera.Instance.SetTarget(player);
@@ -63,8 +64,8 @@ namespace EngineCSharp.MyGame.Scripts
 
             // byte[] imageData = ResourceHelper.GetEmbeddedResource("EngineCSharp.player.png");
             bullet.texture = LoadTextureFromMemory(render, Properties.Resources.bullet);
-            bullet.transform.position.x = player.transform.position.x;
-            bullet.transform.position.y = player.transform.position.y;
+            bullet.transform.position.x = player.transform.position.x+40;
+            bullet.transform.position.y = player.transform.position.y+15;
             Instantiate(bullet);
             bulletCount = 8;
             Audio.PlaySound(Audio.SND.SND_PLAYER_FIRE, (int)Audio.CH.CH_PLAYER);
